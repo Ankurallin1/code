@@ -1,0 +1,149 @@
+(a+b)%m=((a%m)+(b%m))%m
+
+(a-b)%m=((a%m)-(b%m)+m)%m
+
+(a*b)%m=((a%m)*(b%m))%m
+
+(a/b)%m=((a%m)*(b^-1)%m)%m
+
+if we given to find factorial of n 
+with modulo 47 :: it means we have to answer it below 47
+#program
+#include<bits/stdc++.h>
+# using namespace std;
+# int main()
+# {
+#     int n;
+#     cin>>n;
+#     int m=47;
+#     long long fact=1;
+#     for(int i=2;i<=n;i++)
+#     {
+#         fact=(fact*i)%m;
+#     }
+#     cout<<fact;
+#     return 0;
+# }
+# working
+why we are doing modulo in every iterations ?
+    we are taking modulo becuse we cant store 21! in long long
+    so we calculate the modulo in order to get it short and then verify through formula
+
+if n=5
+n!=1*2*3*4*5
+
+let a=1*2*3*4
+and b=5 so,
+(a*b)%m=((a%m)*(b%m))%m
+(1*2*3*4)%47*5%47)%47
+
+((1*2*3)%47*(4%47))%47
+and so on
+
+why we are calculating answer in 10^9+7 modulo ?
+    1.this is because 10^9+7 is very close to integer max range
+    so we can store the ans in integer not using long long
+    2. 10^9+7 is a prime number and the multiplicative inverse is possible
+
+AND---> &
+OR----> |
+XOR---> ^
+NOT---> !
+
+left shift----> <<
+# 3<<1--110=6
+# 6<<1--1100=12
+# x<<y = x*2^y
+right shift---> >>
+# 3>>1--1=1
+# 6>>1--11=3
+# x>>y = x/2^y
+integer max value is 2^31-1 1-bit is reversed for sign(INT_MAX)
+unsigned int max value is 2^32-1
+
+if we are saying that bit is set-- we mean it is 1 > set-1
+if we are saying that bit is unset-- we mean it is 0 > unset-0
+
+6= 110
+0th bit is unset
+1th bit is set
+2nd bit is set
+total 2 bits are set
+
+if we have to find wether ith bit is set or not
+for example 1011011 we have to check for set at 3rd index
+# then we take a number whose 3rd index is set the number is 1<<3-->0001000
+now we take & of these number
+if the and comes if all zero than ith bit is unset
+if the and comes if ith bit as set than we can say that the number i set at ith
+
+# xor property
+x^x=0
+x^0=x
+
+# code related to all bit manipulation
+
+# #include<bits/stdc++.h>
+# using namespace std;
+# void printBinary(int n)
+# {
+#     for(int i=6;i>=0;i--)
+#     {
+#         cout<<((n>>i)&1);
+#     }
+#     cout<<endl;
+# }
+# int main()
+# {
+#     cout<<"Enter the number\n";
+#     int n;
+#     cin>>n;
+#     cout<<"binary\n";
+#     printBinary(n);
+#     cout<<"enter the index to check set bit\n";
+#     int i;
+#     cin>>i;
+#     if(((1<<i)&n)!=0) cout<<"Set bit\n";
+#     else cout<<"NOt set bit\n";
+#     cout<<"Enter the index to set the binary\n";
+#     int j;
+#     cin>>j;
+#     cout<<"the jth set binary is\n";
+#     printBinary(n|(1<<j));/* here we are set the jth by taking or with that number whose jth is 1 only*/
+#     int k;
+#     cout<<"Enter the index to unset the binary\n";
+#     cin>>k;
+#     printBinary(n&(~(1<<k)));
+#     // ~(1<<3)=11110111  n=9(00001001) (n&(~(1<<3)))=00000001 the 3rd bit is unset
+#     // we can toggle a bit by taking xor with that number whose required bit is 1
+#     // toggle make 0 to 1 and 1 to 0 for that bit
+#     int l;
+#     cout<<"Enter the index to toggle\n";
+#     cin>>l;
+#     printBinary(n^(1<<l));
+#     //__builtin_popcount(n) it is a inbuilt fun which print count of set bit 
+#     cout<<"set bit count "<<__builtin_popcount(n)<<endl;
+#     return 0;
+# }
+
+bit masking is a technique to set the bit as per required in order to represent something
+subset of array
+let a={2,3,7,8,9} requirement 5 bit number 00000 
+2 index is 0
+3 index is 1
+7 index is 2
+8 index is 3
+9 index is 4
+[3,8]=01010 here 1st bit is high which represent 3 and 3rd represent 8
+let takes another example a={2,4,5}
+total no of subsets=8
+bitmasks representation of subsets in accordance with array index
+000 []
+001 [2]
+010 [4]
+011 [2,4] here oth and 1st index of array is set so 2,4 
+100 [5]
+101 [2,5]
+110 [4,5]
+111 [2,4,5]
+code implementation
